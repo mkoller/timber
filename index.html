@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="no-js">
 
 <head>
@@ -23,7 +23,8 @@
         <div class="content">
             <center>
                 <div id="coloring-page"></div>
-                <div class="selector">Temporary Test Selector:
+                <div class="selector">
+                    Temporary Test Selector:
                     <select class="page-selector">
                         <option value="moose-1">Moose</option>
                         <option value="summer-1">Summer</option>
@@ -52,51 +53,51 @@
         </div>
         <div class="info-wrap dialog-wrap" id="instructions">
             <div class="info dialog">
-            <h3>Timber Ridge Coloring Page</h3>
-               
-            <!-- grid -->
-                        <div class="section group">
-                        <div class="col span_1_of_3">
-                       
-                            <p><img src="img/drag.svg" alt="drag icon" />Drag any color from the left toolbar to an area on the page. A colored outline will indicate a droppable element.</p>
-                      
-                        </div>
-                        <div class="col span_1_of_3">
-                
-                            <p><img src="img/time.svg" alt="drag icon" />On mobile, wait a tiny bit until you drag the color drop.</p>
- 
-                        </div>
-                        <div class="col span_1_of_3">
-                     
-                            <p><img src="img/dblclick.svg" alt="drag icon" />Double click on any area to clear its color.</p>
-                     
-                        </div>
-                    </div>
+                <h3>Timber Ridge Coloring Page</h3>
 
-                  <div class="section group">
-    <div class="col span_1_of_4">
-   <a id="mylink" href="#">
-    <img src="img/moose.jpg" class="full-img" />
-</a>
-    </div>
-    <div class="col span_1_of_4">
-    <a href="#">
-    <img src="img/spring.jpg" class="full-img" />
-    </a>
-    </div>
-    <div class="col span_1_of_4">
-    <a href="#">
-    <img src="img/summer.jpg" class="full-img" />
-    </a>
-    </div>
-    <div class="col span_1_of_4">
-    <a href="#">
-    <img src="img/holidays.jpg" class="full-img" />
-    </a>
-    </div>
-</div>
-            <!-- grid -->
-            <button class="info-close">Got it!</button>
+                <!-- grid -->
+                <div class="section group">
+                    <div class="col span_1_of_3">
+
+                        <p><img src="img/drag.svg" alt="drag icon" />Drag any color from the left toolbar to an area on the page. A colored outline will indicate a droppable element.</p>
+
+                    </div>
+                    <div class="col span_1_of_3">
+
+                        <p><img src="img/time.svg" alt="drag icon" />On mobile, wait a tiny bit until you drag the color drop.</p>
+
+                    </div>
+                    <div class="col span_1_of_3">
+
+                        <p><img src="img/dblclick.svg" alt="drag icon" />Double click on any area to clear its color.</p>
+
+                    </div>
+                </div>
+
+                <div class="section group">
+                    <div class="col span_1_of_4">
+                        <a class="mylink" href="#" data-value="moose-1">
+                            <img src="img/moose.jpg" class="full-img" />
+                        </a>
+                    </div>
+                    <div class="col span_1_of_4">
+                        <a class="mylink" href="#" data-value="spring-1">
+                            <img src="img/spring.jpg" class="full-img" />
+                        </a>
+                    </div>
+                    <div class="col span_1_of_4">
+                        <a class="mylink" href="#" data-value="summer-1">
+                            <img src="img/summer.jpg" class="full-img" />
+                        </a>
+                    </div>
+                    <div class="col span_1_of_4">
+                        <a class="mylink" href="#" data-value="holidays-1">
+                            <img src="img/holidays.jpg" class="full-img" />
+                        </a>
+                    </div>
+                </div>
+                <!-- grid -->
+                <button class="info-close">Got it!</button>
             </div>
         </div>
     </div>
@@ -105,30 +106,35 @@
     <script src="js/interact-1.2.4.min.js"></script>
     <script src="js/main.js"></script>
 
-   <script type="text/javascript">
+    <script type="text/javascript">
 
-        // Wait for the page to load first
-        window.onload = function() {
+        $(".mylink").click(function () {
+            $("#coloring-page").removeClass();
+            $("#coloring-page").addClass($(this).data('value'));
+            $("#coloring-page").html("");
+            $("#coloring-page").load("coloring-pages/" + $(this).data('value') + ".svg", function () {
+                $(this).find(".paint-area").dblclick(function() {
+                    clrColor(this);
+                    // this.setAttributeNS(null, 'fill', '#f00');
+                });
+            });
+            var pageChange = document.querySelector('.pageChange-confirm-wrap');
+            $(pageChange).animate({
+                opacity: 0
+            }, 50, function() {
+                pageChange.parentNode.removeChild(pageChange);
+            });
+            $(".page-selector").val($("#coloring-page").attr("class"));
 
-          //Get a reference to the link on the page
-          // with an id of "mylink"
-          var a = document.getElementById("mylink");
-
-          //Set code to run when the link is clicked
-          // by assigning a function to "onclick"
-          a.onclick = function() {
-
-            $('#test').attr('data-credit');
-            //If you don't want the link to actually 
-            // redirect the browser to another page,
-            // "google.com" in our example here, then
-            // return false at the end of this block.
-            // Note that this also prevents event bubbling,
-            // which is probably what we want here, but won't 
-            // always be the case.
-            return false;
-          }
-        }
+            var info = document.querySelector('.info-wrap');
+            // alert(info.parentNode);
+            $(info).animate({
+                "opacity": 0
+            }, 50, function () {
+                info.parentNode.removeChild(info);
+            });
+        });
+        
     </script>
 
 </body>
