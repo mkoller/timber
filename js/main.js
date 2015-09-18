@@ -382,3 +382,38 @@ function genColorSwatches() {
 clrColor = function(pathElement) {
     pathElement.setAttributeNS(null, 'fill', "#FFFFFF");
 }
+
+
+// Start modal window function
+
+        $(".mylink").click(function () {
+            $("#coloring-page").removeClass();
+            $("#coloring-page").addClass($(this).data('value'));
+            $("#coloring-page").html("");
+            $("#coloring-page").load("coloring-pages/" + $(this).data('value') + ".svg", function () {
+                $(this).find(".paint-area").dblclick(function() {
+                    clrColor(this);
+                    // this.setAttributeNS(null, 'fill', '#f00');
+                });
+            });
+            var pageChange = document.querySelector('.pageChange-confirm-wrap');
+            $(pageChange).animate({
+                opacity: 0
+            }, 50, function() {
+                pageChange.parentNode.removeChild(pageChange);
+            });
+            $(".page-selector").val($("#coloring-page").attr("class"));
+
+            var info = document.querySelector('.info-wrap');
+            // alert(info.parentNode);
+            $(info).animate({
+                "opacity": 0
+            }, 50, function () {
+                info.parentNode.removeChild(info);
+            });
+        });
+
+
+
+
+
